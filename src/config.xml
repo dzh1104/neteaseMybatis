@@ -2,6 +2,10 @@
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--
+    mv: https://study.163.com/course/introduction/1005847005.htm
+-->
 <configuration>
     <!--通过environments的default值 和 environment的id值 来指定 mybatis 运行时的数据库环境-->
     <environments default="development">
@@ -66,5 +70,6 @@
     <mappers>
         <mapper resource="com/netease/entity/personMapper.xml"/>
         <mapper resource="com/netease/entity/studentMapper.xml"/>
+        <mapper resource="com/netease/mapper/studentMapper.xml"/>
     </mappers>
 </configuration>
