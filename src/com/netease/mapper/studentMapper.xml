@@ -15,15 +15,53 @@
         parameterType: 输入参数的类型
             mybatis约定: 输入参数paramterType 和 resultType，在形式上都只能有一个
             输入参数:
-                如果是 简单类型(8个基本类型 + String)，则可以使用任何占位符，#{xxx}
+                如果是 简单类型(8个基本类型 + String)，则可以使用任何占位符，#{xxx} 或者 ${value} (后者固定)
                 如果是 对象类型，则必须是对象的属性，#{stuName}
             输出参数:
                 如果返回值类型是一个 对象 (如Student)，则无论返回一个，还是多个，在resultType都写成com.netease.entity.Student，
                 即: resultType="com.netease.entity.Student"
         resultType: 返回结果值的类型，返回类型
     -->
+
+    <!--
+        输入参数: parameterType
+            1.简单类型(8个基本类型 + String)
+                区别:
+                    a.#{} ${value}
+                        #{任意值}
+                        ${value}，其中标识符只能是value
+                    b.
+                        #{}自动给String类型加上单引号 '' (也是自动类型转换)
+                        ${value}原样输出，有时需要手动添加''，但是合适于 动态排序(动态字段)，不适合参数传值
+                    c.
+                        #{}可以防止SQL注入
+                        ${value}不防止
+                相同:
+                    a.都可以获取对象的值(嵌套类型对象)
+                        #{stuName} 和 ${stuName}
+
+    -->
+
     <select id="queryStudentByStuno" resultType="student" parameterType="int">
-    select * from student where stuno = #{stuno}
+    select * from student where stuno = ${value}
+  </select>
+
+    <!--
+        select stuno, stuname, stuage, graname from student where stuname = ${value}
+        select stuno, stuname, stuage, graname from student where stuname = huzi 没有加引号，导致SQL语法错误
+        select stuno, stuname, stuage, graname from student where stuname = '${value}'
+    -->
+    <select id="queryStudentByStuname" resultType="student" parameterType="String">
+       select stuno, stuname, stuage, graname from student where stuname = #{stuname}
+  </select>
+
+    <select id="queryStudentsOrderByColumn" resultType="student">
+       select * from student order by ${value} desc
+  </select>
+
+    <!--select * from student where stuage = #{stuAge} or stuname like #{stuName}-->
+    <select id="queryStudentsBystuageOrstuname" parameterType="student" resultType="student">
+       select * from student where stuage = #{stuAge} or stuname like '%${stuName}%'
   </select>
 
     <insert id="addStudent" parameterType="student">
@@ -44,6 +82,7 @@
 
     <!--
         查询: 使用了类型转换器
+
             1.如果类中的属性和表中字段，类型能够合理识别 (varchar String) ，则可以使用 resultType；
             否则 (boolean int) 使用 resultMap
             2.如果类中属性名和表中的字段名，能够合理识别 (stuNo stuno)，则可以使用 resultType；

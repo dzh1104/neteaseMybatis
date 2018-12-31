@@ -58,6 +58,14 @@ void updateStudentByStuno(Student student);
 //  查询某个学生 带有 使用 转换器
 Student queryStudentByStunoWithConvert(int stuno);
 
+//  添加学生 使用了 类型转换器
 void addStudentWithConvert(Student student);
+
+//  通过名字查询某个学生呢
+Student queryStudentByStuname(String stuName);
+
+List<Student> queryStudentsOrderByColumn(String column);
+
+List<Student> queryStudentsBystuageOrstuname(Student student);
 
 }

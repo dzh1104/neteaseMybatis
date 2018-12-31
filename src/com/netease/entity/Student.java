@@ -6,6 +6,7 @@ public class Student {
 	private int stuAge;
 	private String graName;
 	private Boolean stuSex;
+	private Address address; // 家庭、学校地址
 
 public Student() {
 
@@ -76,6 +77,16 @@ public Student(int stuNo, String stuName, int stuAge, String graName) {
 	this.stuName = stuName;
 	this.stuAge = stuAge;
 	this.graName = graName;
+}
+
+public Address getAddress() {
+	
+	return address;
+}
+
+public void setAddress(Address address) {
+	
+	this.address = address;
 }
 
 @Override
