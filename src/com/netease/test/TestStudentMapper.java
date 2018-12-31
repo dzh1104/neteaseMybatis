@@ -13,6 +13,7 @@ import java.util.List;
 
 public class TestStudentMapper {
 
+//	查询某个学生
 public static void queryStudentByStuno() throws IOException {
 	
 	Reader reader = Resources.getResourceAsReader("config.xml");
@@ -133,14 +134,58 @@ public static void updateStudentByStuno() throws IOException {
 	
 }
 
+//  查询单个学生 (使用了转换器)
+public static void queryStudentByStunoWithConvert() throws IOException {
+	Reader reader = Resources.getResourceAsReader("config.xml");
+	
+	SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+	
+	SqlSession sqlSession = sqlSessionFactory.openSession();
+	
+	StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+	//	接口中的方法 -> SQL语句
+	Student student = mapper.queryStudentByStunoWithConvert(1);
+	
+	System.out.println(student);
+	
+	sqlSession.close();
+}
+
+//	增加学生 (带转换器)
+public static void addStudentWithConvert() throws IOException {
+	
+	Reader reader = Resources.getResourceAsReader("config.xml");
+	
+	SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+	
+	SqlSession sqlSession = sqlSessionFactory.openSession();
+	
+//	stuSex 属性 设置为 true，增加成功 数据库对应的值 应该是 1
+	Student student = new Student(8, "huzi", 30, "d9", true);
+	
+	StudentMapper sqlSessionMapper = sqlSession.getMapper(StudentMapper.class);
+	sqlSessionMapper.addStudentWithConvert(student);
+	//	由于事务提交类型是 JDBC，所以要手动提交
+	sqlSession.commit();
+	
+	System.out.println("增加成功");
+	
+	sqlSession.close();
+	
+}
+
 public static void main(String[] args) throws IOException {
 	queryAllStudents();
+//
+//	queryStudentByStuno();
+//
+//	updateStudentByStuno();
+//
+//	queryAllStudents();
 	
-	queryStudentByStuno();
+//	queryStudentByStunoWithConvert();
 	
-	updateStudentByStuno();
-	
-	queryAllStudents();
+//	addStudentWithConvert();
 }
 
 }

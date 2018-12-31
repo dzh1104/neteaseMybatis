@@ -5,7 +5,7 @@
 
 <!--namespace: 该mapper.xml映射文件的 唯一标识-->
 <mapper namespace="com.netease.entity.personMapper">
-    <select id="queryPersonById" resultType="com.netease.entity.Person" parameterType="int">
+    <select id="queryPersonById" resultType="com.netease.entity.Person1" parameterType="int">
     select * from person where id = #{id}
   </select>
 </mapper>

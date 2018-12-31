@@ -7,6 +7,32 @@
     mv: https://study.163.com/course/introduction/1005847005.htm
 -->
 <configuration>
+
+    <!--引入配置文件-->
+    <properties resource="db.properties" />
+
+    <!--mybatis全局参数配置-->
+    <!--
+        <settings>
+            <setting name="cacheEnabled" value="false" />
+        </settings>
+    -->
+
+    <!--设置单个/多个别名(忽略大小写)-->
+    <typeAliases>
+        <!--单个别名-->
+        <!--<typeAlias type="com.netease.entity.Student" alias="student" />-->
+
+        <!--批量定义别名，以下会自动将该包中的所有类 批量定义别名，别名就是 不带包名的 类名-->
+        <package name="com.netease.entity"></package>
+    </typeAliases>
+
+    <!--配置 类型转换器-->
+    <typeHandlers>
+        <!--jdbcType="INTEGER" 大写-->
+        <typeHandler handler="com.netease.convert.BooleanAndIntConvert" javaType="Boolean" jdbcType="INTEGER" />
+    </typeHandlers>
+
     <!--通过environments的default值 和 environment的id值 来指定 mybatis 运行时的数据库环境-->
     <environments default="development">
         <!--
@@ -33,11 +59,10 @@
             -->
             <dataSource type="POOLED">
                 <!--配置数据库信息-->
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url"
-                          value="jdbc:mysql://localhost:3306/netease?useSSL=false"/>
-                <property name="username" value="root"/>
-                <property name="password" value="fullstack"/>
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
             </dataSource>
         </environment>
 
@@ -70,6 +95,7 @@
     <mappers>
         <mapper resource="com/netease/entity/personMapper.xml"/>
         <mapper resource="com/netease/entity/studentMapper.xml"/>
+        <mapper resource="com/netease/mapper/personMapper.xml"/>
         <mapper resource="com/netease/mapper/studentMapper.xml"/>
     </mappers>
 </configuration>

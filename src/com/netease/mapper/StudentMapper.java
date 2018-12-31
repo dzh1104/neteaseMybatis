@@ -55,4 +55,9 @@ void deleteStudentByStuno(int stuno);
 //  修改学生
 void updateStudentByStuno(Student student);
 
+//  查询某个学生 带有 使用 转换器
+Student queryStudentByStunoWithConvert(int stuno);
+
+void addStudentWithConvert(Student student);
+
 }

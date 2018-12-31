@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.mapper.PersonMapper">
+
+    <!--类的属性名 和 表中的字段名称 不能合理识别，要用 resultMap -->
+    <select id="queryPersonByUid" resultMap="personMapping" parameterType="int">
+    select * from person where id = #{id}
+  </select>
+
+    <resultMap id="personMapping" type="com.netease.entity.Person">
+        <result property="uid" column="id"></result>
+        <result property="name" column="name"></result>
+        <result property="age" column="age"></result>
+    </resultMap>
+</mapper>

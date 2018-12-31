@@ -22,11 +22,11 @@
                 即: resultType="com.netease.entity.Student"
         resultType: 返回结果值的类型，返回类型
     -->
-    <select id="queryStudentByStuno" resultType="com.netease.entity.Student" parameterType="int">
+    <select id="queryStudentByStuno" resultType="student" parameterType="int">
     select * from student where stuno = #{stuno}
   </select>
 
-    <insert id="addStudent" parameterType="com.netease.entity.Student">
+    <insert id="addStudent" parameterType="student">
         insert into student (stuno, stuname, stuage, graname) values(#{stuNo}, #{stuName}, #{stuAge}, #{graName})
     </insert>
 
@@ -34,11 +34,42 @@
         delete from student where stuno = #{stuno}
     </delete>
 
-    <update id="updateStudentByStuno" parameterType="com.netease.entity.Student">
+    <update id="updateStudentByStuno" parameterType="student">
         update student set stuname=#{stuName}, stuage=#{stuAge}, graname=#{graName} where stuno=#{stuNo}
     </update>
 
-    <select id="queryAllStudents" resultType="com.netease.entity.Student" >
+    <select id="queryAllStudents" resultType="student" >
         select * from student
     </select>
+
+    <!--
+        查询: 使用了类型转换器
+            1.如果类中的属性和表中字段，类型能够合理识别 (varchar String) ，则可以使用 resultType；
+            否则 (boolean int) 使用 resultMap
+            2.如果类中属性名和表中的字段名，能够合理识别 (stuNo stuno)，则可以使用 resultType；
+            否则 (id stuno) 使用 resultMap
+    -->
+    <select id="queryStudentByStunoWithConvert" parameterType="int" resultMap="studentResult">
+        select * from student where stuno = #{stuno}
+    </select>
+
+    <resultMap type="student" id="studentResult">
+        <!--分为主键 id 和非主键 result -->
+        <id property="stuNo" column="stuno"></id>
+        <result property="stuName" column="stuname"></result>
+        <result property="stuAge" column="stuage"></result>
+        <result property="graName" column="graName"></result>
+        <!--jdbcType="INTEGER" 大写-->
+        <result property="stuSex" column="stuSex" javaType="boolean" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <!--
+        增加: 使用类型转换器
+
+    -->
+    <insert id="addStudentWithConvert" parameterType="student">
+        insert into student (stuno, stuname, stuage, graname, stusex) values(#{stuNo}, #{stuName}, #{stuAge},
+        #{graName},
+        #{stuSex, javaType=boolean, jdbcType=INTEGER})
+    </insert>
 </mapper>

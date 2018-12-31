@@ -52,7 +52,7 @@ public static void main(String[] args) throws IOException {
 	String statement = "com.netease.entity.personMapper.queryPersonById";
 	
 	//	执行sql语句，传入参数，并获取结果
-	Person person = sqlSession.selectOne(statement, 1);
+	Person1 person = sqlSession.selectOne(statement, 1);
 	System.out.println(person.toString());
 	
 	//	关闭资源
