@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--通过environments的default值 和 environment的id值 来指定 mybatis 运行时的数据库环境-->
+    <environments default="development">
+        <!--
+            可配置多个环境: 开发 测试 发布等环境
+        -->
+        <environment id="development">
+
+            <!--
+                事务提交方式:
+                    JDBC: 利用JDBC方式处理事务，手动处理(commit rollback close)
+                    MANAGED: 将事务交由 其他组件 去托管(spring jobss)，默认会关闭连接
+            -->
+            <!--<transactionManager type="MANAGED">-->
+                <!--<property name="closeConnection" value="false" />-->
+            <!--</transactionManager>-->
+
+            <transactionManager type="JDBC" />
+
+            <!--
+                数据源类型:
+                    UNPOOLED: 传统的JDBC模式，不使用数据库连接池
+                    POOLED: 使用数据库连接池(三方连接池)
+                    JNDI: 从tomcat中获取一个内置的数据库连接池(数据库连接池 ~= 数据源)
+            -->
+            <dataSource type="POOLED">
+                <!--配置数据库信息-->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/netease?useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="fullstack"/>
+            </dataSource>
+        </environment>
+
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <!--配置数据库信息-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://192.168.1.183:3306/netease?useSSL=false"/>
+                <property name="username" value="root2"/>
+                <property name="password" value="fullstack2"/>
+            </dataSource>
+        </environment>
+
+        <environment id="production">
+            <transactionManager type="JDBC"/>
+            <!--配置数据库信息-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://192.168.1.127:3306/netease?useSSL=false"/>
+                <property name="username" value="root3"/>
+                <property name="password" value="fullstack3"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+    <!--加载映射文件-->
+    <mappers>
+        <mapper resource="com/netease/entity/personMapper.xml"/>
+        <mapper resource="com/netease/entity/studentMapper.xml"/>
+    </mappers>
+</configuration>

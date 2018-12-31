@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.mapper.StudentMapper">
+
+    <!--
+        如果是 select stuno from person where id = #{stuno}， resultType 就是 int
+    -->
+
+    <!--namespace + id 作为 标识-->
+
+    <!--
+        parameterType: 输入参数的类型
+            mybatis约定: 输入参数paramterType 和 resultType，在形式上都只能有一个
+            输入参数:
+                如果是 简单类型(8个基本类型 + String)，则可以使用任何占位符，#{xxx}
+                如果是 对象类型，则必须是对象的属性，#{stuName}
+            输出参数:
+                如果返回值类型是一个 对象 (如Student)，则无论返回一个，还是多个，在resultType都写成com.netease.entity.Student，
+                即: resultType="com.netease.entity.Student"
+        resultType: 返回结果值的类型，返回类型
+    -->
+    <select id="queryStudentByStuno" resultType="com.netease.entity.Student" parameterType="int">
+    select * from student where stuno = #{stuno}
+  </select>
+
+    <insert id="addStudent" parameterType="com.netease.entity.Student">
+        insert into student (stuno, stuname, stuage, graname) values(#{stuNo}, #{stuName}, #{stuAge}, #{graName})
+    </insert>
+
+    <delete id="deleteStudentByStuno" parameterType="int">
+        delete from student where stuno = #{stuno}
+    </delete>
+
+    <update id="updateStudentByStuno" parameterType="com.netease.entity.Student">
+        update student set stuname=#{stuName}, stuage=#{stuAge}, graname=#{graNmae} where stuno=#{stuNo}
+    </update>
+
+    <select id="queryAllStudents" resultType="com.netease.entity.Student" >
+        select * from student
+    </select>
+</mapper>
