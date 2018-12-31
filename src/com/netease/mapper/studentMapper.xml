@@ -48,13 +48,17 @@
             否则 (boolean int) 使用 resultMap
             2.如果类中属性名和表中的字段名，能够合理识别 (stuNo stuno)，则可以使用 resultType；
             否则 (id stuno) 使用 resultMap
+
+        resultMap的用处(功能):
+            1.类型转换
+            2.属性-字段的映射关系
     -->
     <select id="queryStudentByStunoWithConvert" parameterType="int" resultMap="studentResult">
         select * from student where stuno = #{stuno}
     </select>
 
     <resultMap type="student" id="studentResult">
-        <!--分为主键 id 和非主键 result -->
+        <!--分为主键 id 和非主键 result的两种标签 -->
         <id property="stuNo" column="stuno"></id>
         <result property="stuName" column="stuname"></result>
         <result property="stuAge" column="stuage"></result>
