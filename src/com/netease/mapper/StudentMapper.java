@@ -1,5 +1,6 @@
 package com.netease.mapper;
 
+import com.netease.entity.Address;
 import com.netease.entity.Student;
 
 import java.util.List;
@@ -67,5 +68,9 @@ Student queryStudentByStuname(String stuName);
 List<Student> queryStudentsOrderByColumn(String column);
 
 List<Student> queryStudentsBystuageOrstuname(Student student);
+
+//List<Student> queryStudentByaddress(Address address);
+
+List<Student> queryStudentByaddress(Student student);
 
 }

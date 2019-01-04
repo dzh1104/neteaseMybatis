@@ -1,5 +1,6 @@
 package com.netease.test;
 
+import com.netease.entity.Address;
 import com.netease.entity.Student;
 import com.netease.mapper.StudentMapper;
 import org.apache.ibatis.io.Resources;
@@ -255,6 +256,39 @@ public static void queryStudentsBystuageOrstuname() throws IOException {
 	
 }
 
+//  根据地址查学生
+public static void queryStudentByaddress() throws IOException {
+	
+	Reader reader = Resources.getResourceAsReader("config.xml");
+	
+	SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+	
+	SqlSession sqlSession = sqlSessionFactory.openSession();
+	
+	StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+	
+	Student student = new Student();
+	
+	Address address = new Address();
+	address.setHomeAddress("bj");
+	address.setSchoolAddress("bj");
+	
+	student.setAddress(address);
+	
+	//	根据接口中的方法 自动对应 SQL语句
+//	List<Student> students = mapper.queryStudentByaddress(address);
+	List<Student> students = mapper.queryStudentByaddress(student);
+	
+	/**
+	 * 通过sqlSession对象获取接口(sqlSession.getMapper(接口.class))，再调用该接口中的方法，程序会自动执行该方法对应的SQL
+	 * */
+	
+	System.out.println(students);
+	
+	sqlSession.close();
+	
+}
+
 
 public static void main(String[] args) throws IOException {
 //	queryAllStudents();
@@ -273,7 +307,9 @@ public static void main(String[] args) throws IOException {
 	
 //	queryStudentsOrderByColumn();
 	
-	queryStudentsBystuageOrstuname();
+//	queryStudentsBystuageOrstuname();
+	
+	queryStudentByaddress();
 }
 
 }

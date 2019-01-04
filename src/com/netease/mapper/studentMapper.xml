@@ -64,6 +64,18 @@
        select * from student where stuage = #{stuAge} or stuname like '%${stuName}%'
   </select>
 
+    <!--
+        <select id="queryStudentByaddress" parameterType="address" resultType="student">
+             select * from student where homeaddress = #{homeAddress} or schooladdress = '${schoolAddress}'
+        </select>
+    -->
+
+    <!--输入参数级联属性-->
+    <select id="queryStudentByaddress" parameterType="student" resultType="student">
+             select * from student where homeaddress = #{address.homeAddress} or schooladdress =
+             '${address.schoolAddress}'
+        </select>
+
     <insert id="addStudent" parameterType="student">
         insert into student (stuno, stuname, stuage, graname) values(#{stuNo}, #{stuName}, #{stuAge}, #{graName})
     </insert>

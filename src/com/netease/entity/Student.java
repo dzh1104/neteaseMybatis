@@ -92,7 +92,7 @@ public void setAddress(Address address) {
 @Override
 public String toString() {
 	
-	return "Student{" + "stuNo=" + stuNo + ", stuName='" + stuName + '\'' + ", stuAge=" + stuAge + ", graName='" + graName + '\'' + ", stuSex=" + stuSex + '}';
+	return "Student{" + "stuNo=" + stuNo + ", stuName='" + stuName + '\'' + ", stuAge=" + stuAge + ", graName='" + graName + '\'' + ", stuSex=" + stuSex + ", address=" + address + '}';
 }
 
 }
