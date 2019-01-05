@@ -4,6 +4,7 @@ import com.netease.entity.Address;
 import com.netease.entity.Student;
 
 import java.util.List;
+import java.util.Map;
 
 //  操作mybatis的接口
 public interface StudentMapper {
@@ -68,6 +69,8 @@ Student queryStudentByStuname(String stuName);
 List<Student> queryStudentsOrderByColumn(String column);
 
 List<Student> queryStudentsBystuageOrstuname(Student student);
+
+List<Student> queryStudentsBystuageOrstunameWithHashMap(Map<String, Object> map);
 
 //List<Student> queryStudentByaddress(Address address);
 

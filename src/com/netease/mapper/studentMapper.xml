@@ -61,6 +61,11 @@
 
     <!--select * from student where stuage = #{stuAge} or stuname like #{stuName}-->
     <select id="queryStudentsBystuageOrstuname" parameterType="student" resultType="student">
+      select * from student where stuage = #{stuAge} or stuname like '%${stuName}%'
+    </select>
+
+    <!--入参有上面的调整为 HashMap-->
+    <select id="queryStudentsBystuageOrstunameWithHashMap" parameterType="HashMap" resultType="student">
        select * from student where stuage = #{stuAge} or stuname like '%${stuName}%'
   </select>
 

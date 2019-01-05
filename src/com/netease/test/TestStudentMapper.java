@@ -10,7 +10,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TestStudentMapper {
 
@@ -289,6 +291,34 @@ public static void queryStudentByaddress() throws IOException {
 	
 }
 
+//  入参为 HashMap
+public static void queryStudentsBystuageOrstunameWithHashMap() throws IOException {
+	
+	Reader reader = Resources.getResourceAsReader("config.xml");
+	
+	SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+	
+	SqlSession sqlSession = sqlSessionFactory.openSession();
+	
+	StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+	
+	Map<String, Object> studentMap = new HashMap<>();
+	studentMap.put("stuAge", 30);
+	studentMap.put("stuName", "zi");
+	
+	//	根据接口中的方法 自动对应 SQL语句
+	List<Student> students = mapper.queryStudentsBystuageOrstunameWithHashMap(studentMap);
+	
+	/**
+	 * 通过sqlSession对象获取接口(sqlSession.getMapper(接口.class))，再调用该接口中的方法，程序会自动执行该方法对应的SQL
+	 * */
+	
+	System.out.println(students);
+	
+	sqlSession.close();
+	
+}
+
 
 public static void main(String[] args) throws IOException {
 //	queryAllStudents();
@@ -309,7 +339,9 @@ public static void main(String[] args) throws IOException {
 	
 //	queryStudentsBystuageOrstuname();
 	
-	queryStudentByaddress();
+	queryStudentsBystuageOrstunameWithHashMap();
+	
+//	queryStudentByaddress();
 }
 
 }
