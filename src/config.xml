@@ -8,6 +8,17 @@
 -->
 <configuration>
 
+    <!--在mybatis中引入外部文件的方式如下，在spring的配置文件是用bean，通过PreferencesPlaceholderConfigurer这个类来实现，在下面就可以用${driver}来取值-->
+    <!--
+    <bean id="config" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>classpath:db.properties</value>
+            </array>
+        </property>
+    </bean>
+    -->
+
     <!--引入配置文件-->
     <properties resource="db.properties" />
 
